@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/01 18:48:23 by vd-ambro          #+#    #+#             */
+/*   Updated: 2023/10/01 19:31:59 by vd-ambro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,20 +60,20 @@ void	take_forks(Philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&(philo->l_fork->is_lock));
-		printf("%lu Philosopher %d has taken fork L\n", (get_timestamp()
-					- philo->params->start_time), philo->id);
+		//printf("%lu Philosopher %d has taken fork L\n", (get_timestamp()
+		//			- philo->params->start_time), philo->id);
 		pthread_mutex_lock(&(philo->r_fork->is_lock));
-		printf("%lu Philosopher %d has taken fork R\n", (get_timestamp()
-					- philo->params->start_time), philo->id);
+		//printf("%lu Philosopher %d has taken fork R\n", (get_timestamp()
+		//			- philo->params->start_time), philo->id);
 	}
 	else
 	{
 		pthread_mutex_lock(&(philo->r_fork->is_lock));
-		printf("%lu Philosopher %d has taken fork R\n", (get_timestamp()
-					- philo->params->start_time), philo->id);
+		//printf("%lu Philosopher %d has taken fork R\n", (get_timestamp()
+		//			- philo->params->start_time), philo->id);
 		pthread_mutex_lock(&(philo->l_fork->is_lock));
-		printf("%lu Philosopher %d has taken fork L\n", (get_timestamp()
-					- philo->params->start_time), philo->id);
+		//printf("%lu Philosopher %d has taken fork L\n", (get_timestamp()
+		//			- philo->params->start_time), philo->id);
 	}
 }
 
@@ -69,8 +81,29 @@ void	release_forks(Philo *philo)
 {
 	pthread_mutex_unlock(&(philo->l_fork->is_lock));
 	pthread_mutex_unlock(&(philo->r_fork->is_lock));
-	printf("%lu Philosopher %d released forks\n", (get_timestamp()
+	//printf("%lu Philosopher %d released forks\n", (get_timestamp()
+	//			- philo->params->start_time), philo->id);
+}
+
+void	eating(Philo *philo)
+{
+	printf("%lu Philosopher %d is eating\n", (get_timestamp()
 				- philo->params->start_time), philo->id);
+	ft_usleep(philo->params->time_to_eat);
+}
+
+void	thinking(Philo *philo)
+{
+	printf("%lu Philosopher %d is thinking\n", (get_timestamp()
+				- philo->params->start_time), philo->id);
+	ft_usleep(100);
+}
+
+void	sleeping(Philo *philo)
+{
+	printf("%lu Philosopher %d is sleeping\n", (get_timestamp()
+				- philo->params->start_time), philo->id);
+	ft_usleep(philo->params->time_to_sleep);
 }
 
 void	*routine(void *arg)
@@ -80,48 +113,42 @@ void	*routine(void *arg)
 	philo = (Philo *)arg;
 	while (1)
 	{
-		printf("%lu Philosopher %d is thinking\n", (get_timestamp()
-					- philo->params->start_time), philo->id);
-		sleep(1);
 		take_forks(philo);
-		printf("%lu Philosopher %d is eating\n", (get_timestamp()
-					- philo->params->start_time), philo->id);
-		sleep(1);
+		eating(philo);
 		release_forks(philo);
+		sleeping(philo);
+		thinking(philo);
 	}
 	return (NULL);
 }
 
 int	main(int argc, char *argv[])
 {
-	int			num_philos;
+	int			num_philos = atoi(argv[1]);
 	pthread_t	thread_id[num_philos];
 	Philo		philos[num_philos];
 	Fork		forks[num_philos];
 	t_params	data;
 
-	if (argc != 2)
+	if (argc != 5)
 	{
-		printf("Usage: %s <philo_num>\n", argv[0]);
+		printf("Usage: %s <philo_num> <time_to_die> <time_to_eat> <time_to_sleep>\n", argv[0]);
 		return (1);
 	}
-	num_philos = atoi(argv[1]);
 	if (num_philos <= 0)
 	{
 		printf("Insert a valid number of philosophers.\n");
 		return (1);
 	}
-	// Init philos
 	for (int i = 0; i < num_philos; i++)
 	{
 		pthread_mutex_init(&(forks[i].is_lock), NULL);
 		philos[i].params = &data;
 	}
-	//data.time_to_die = atoi(argv[2]);
-	//data.time_to_eat = atoi(argv[3]);
-	//data.time_to_sleep = atoi(argv[4]);
+	data.time_to_die = atoi(argv[2]);	//2
+	data.time_to_eat = atoi(argv[3]);	//3
+	data.time_to_sleep = atoi(argv[4]);	//4
 	data.start_time = get_timestamp();
-	//printf("%lu\n", data.start_time);
 	for (int i = 0; i < num_philos; i++)
 	{
 		philos[i].id = i + 1;
