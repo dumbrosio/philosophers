@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 18:48:23 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/01 19:31:59 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/02 12:57:05 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 typedef struct s_params
 {
+	int				num_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
@@ -33,6 +34,7 @@ typedef struct
 {
 	t_params		*params;
 	int				id;
+	int				last_meal;
 	Fork			*l_fork;
 	Fork			*r_fork;
 }					Philo;
@@ -60,20 +62,20 @@ void	take_forks(Philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&(philo->l_fork->is_lock));
-		//printf("%lu Philosopher %d has taken fork L\n", (get_timestamp()
-		//			- philo->params->start_time), philo->id);
+		printf("%lu Philosopher %d has taken fork L\n", (get_timestamp()
+					- philo->params->start_time), philo->id);
 		pthread_mutex_lock(&(philo->r_fork->is_lock));
-		//printf("%lu Philosopher %d has taken fork R\n", (get_timestamp()
-		//			- philo->params->start_time), philo->id);
+		printf("%lu Philosopher %d has taken fork R\n", (get_timestamp()
+					- philo->params->start_time), philo->id);
 	}
 	else
 	{
 		pthread_mutex_lock(&(philo->r_fork->is_lock));
-		//printf("%lu Philosopher %d has taken fork R\n", (get_timestamp()
-		//			- philo->params->start_time), philo->id);
+		printf("%lu Philosopher %d has taken fork R\n", (get_timestamp()
+					- philo->params->start_time), philo->id);
 		pthread_mutex_lock(&(philo->l_fork->is_lock));
-		//printf("%lu Philosopher %d has taken fork L\n", (get_timestamp()
-		//			- philo->params->start_time), philo->id);
+		printf("%lu Philosopher %d has taken fork L\n", (get_timestamp()
+					- philo->params->start_time), philo->id);
 	}
 }
 
@@ -89,6 +91,7 @@ void	eating(Philo *philo)
 {
 	printf("%lu Philosopher %d is eating\n", (get_timestamp()
 				- philo->params->start_time), philo->id);
+	philo->last_meal = get_timestamp();
 	ft_usleep(philo->params->time_to_eat);
 }
 
@@ -96,7 +99,7 @@ void	thinking(Philo *philo)
 {
 	printf("%lu Philosopher %d is thinking\n", (get_timestamp()
 				- philo->params->start_time), philo->id);
-	ft_usleep(100);
+	//ft_usleep(100);
 }
 
 void	sleeping(Philo *philo)
@@ -122,10 +125,34 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
+void	*monitor_death(void *arg)
+{
+	Philo	*philo = (Philo *)arg;
+	int		i;
+
+	while (1)
+	{
+		i = 0;
+		while (philo->params->num_philos > i)
+		{
+			if ((get_timestamp() - philo[i].last_meal) > philo->params->time_to_die)
+			{
+				printf("%lu Philosopher %d died\n", (get_timestamp()
+					- philo[i].params->start_time), philo[i].id);
+				exit(1);
+			}
+			i++;
+		}
+		ft_usleep(100);
+	}
+	return (NULL);
+}
+
 int	main(int argc, char *argv[])
 {
 	int			num_philos = atoi(argv[1]);
 	pthread_t	thread_id[num_philos];
+	//pthread_t	thread_monitor;
 	Philo		philos[num_philos];
 	Fork		forks[num_philos];
 	t_params	data;
@@ -143,23 +170,27 @@ int	main(int argc, char *argv[])
 	for (int i = 0; i < num_philos; i++)
 	{
 		pthread_mutex_init(&(forks[i].is_lock), NULL);
-		philos[i].params = &data;
 	}
+	data.num_philos	= atoi(argv[1]);	//1
 	data.time_to_die = atoi(argv[2]);	//2
 	data.time_to_eat = atoi(argv[3]);	//3
 	data.time_to_sleep = atoi(argv[4]);	//4
 	data.start_time = get_timestamp();
 	for (int i = 0; i < num_philos; i++)
 	{
+		philos[i].params = &data;
 		philos[i].id = i + 1;
 		philos[i].l_fork = &forks[i];
 		philos[i].r_fork = &forks[(i + 1) % num_philos];
+		philos[i].last_meal = get_timestamp();
 		pthread_create(&thread_id[i], NULL, routine, &philos[i]);
 	}
+	//pthread_create(&thread_monitor, NULL, monitor_death, philos);
 	for (int i = 0; i < num_philos; i++)
 	{
 		pthread_join(thread_id[i], NULL);
 	}
+	//pthread_join(thread_monitor, NULL);
 	for (int i = 0; i < num_philos; i++)
 	{
 		pthread_mutex_destroy(&(forks[i].is_lock));
