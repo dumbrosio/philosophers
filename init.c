@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/05 16:54:28 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/05 18:36:42 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int	init_params(t_params *params, int argc, char **argv)
 				argv[0]);
 		return (0);
 	}
-	params->num_philos = atoi(argv[1]);
-	params->time_to_die = atoi(argv[2]);
-	params->time_to_eat = atoi(argv[3]);
-	params->time_to_sleep = atoi(argv[4]);
+	params->num_philos = ft_atoi(argv[1]);
+	params->time_to_die = ft_atoi(argv[2]);
+	params->time_to_eat = ft_atoi(argv[3]);
+	params->time_to_sleep = ft_atoi(argv[4]);
 	if (params->num_philos <= 0)
 	{
 		printf("Insert a valid number of philosophers.\n");
