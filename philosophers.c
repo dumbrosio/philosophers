@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 18:48:23 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/05 16:48:20 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/05 18:50:59 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char *argv[])
 
 	num_philos = atoi(argv[1]);
 	thread_id = malloc(num_philos * sizeof(pthread_t));
-	init_params(&data, argc, argv);
+	check_params(&data, argc, argv);
 	create_philos(&philos, &forks, &data);
 	data.start_time = get_timestamp();
 

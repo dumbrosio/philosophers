@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/05 18:36:42 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/05 18:37:55 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	create_philos(t_philo **philos, t_fork **forks, t_params *params)
 	return (1);
 }
 
-int	init_params(t_params *params, int argc, char **argv)
+int	check_params(t_params *params, int argc, char **argv)
 {
 	if (argc != 5)
 	{

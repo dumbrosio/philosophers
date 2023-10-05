@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:46:52 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/05 16:54:32 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/05 18:45:50 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*routine(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
-	philo->last_meal = 0;
+	philo->params->start_time = get_timestamp();
 	while (1)
 	{
 		take_forks(philo);

@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:42:59 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/05 16:54:24 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/05 18:53:19 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void				init_philo(t_philo *philo, t_fork **forks, t_params *params,
 						int i);
 int					create_philos(t_philo **philos, t_fork **forks,
 						t_params *params);
-int					init_params(t_params *params, int argc, char **argv);
+int					check_params(t_params *params, int argc, char **argv);
 
 // forks
 void				take_forks(t_philo *philo);
@@ -63,3 +63,4 @@ void				die(t_philo *philo);
 //utils
 long				get_timestamp(void);
 void				ft_usleep(long int time_in_ms);
+int					ft_atoi(const char *str);
