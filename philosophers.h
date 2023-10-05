@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:42:59 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/05 18:53:19 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:10:53 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
+	pthread_t		life;
 	t_params		*params;
 	int				id;
 	long			last_meal;
@@ -59,6 +60,10 @@ void				*routine(void *arg);
 // death
 long				get_meal_interval(t_philo *philo);
 void				die(t_philo *philo);
+
+// threads.c
+int					create_threads(t_philo **philos, t_params *params);
+int					wait_threads(t_philo **philos, t_params *params);
 
 //utils
 long				get_timestamp(void);
