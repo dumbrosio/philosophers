@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:48:04 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/05 16:48:36 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/06 11:49:07 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	die(t_philo *philo)
 	meal_interval = get_meal_interval(philo);
 	if (meal_interval > philo->params->time_to_die)
 	{
+		pthread_mutex_lock(&(philo->params->console_m));
 		printf("%lu Philosopher %d has died\n", (get_timestamp()
 					- philo->params->start_time), philo->id);
+		pthread_mutex_unlock(&(philo->params->console_m));
 		exit(1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:42:59 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/05 19:10:53 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/06 11:49:07 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_params
 	int				time_to_eat;
 	int				time_to_sleep;
 	long			start_time;
+	pthread_mutex_t	console_m;
 }					t_params;
 
 typedef struct s_fork
