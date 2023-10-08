@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:42:59 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/08 16:30:15 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/08 20:54:41 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_philo
 	int				id;
 	int				meal_count;
 	long			last_meal_time;
-	pthread_mutex_t	last_meal_m;
 	pthread_t		life;
 	t_fork			*l_fork;
 	t_fork			*r_fork;
@@ -70,6 +69,6 @@ int					stop_threads(t_philo *philo);
 
 //utils
 long				get_timestamp(void);
-void				ft_usleep(long int time_in_ms);
+void				ft_usleep(long int ms);
 int					ft_atoi(const char *str);
 void				write_state(char *str, t_philo *philo);

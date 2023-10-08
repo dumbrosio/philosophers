@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:44:20 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/07 21:32:14 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/08 20:54:41 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ long	get_timestamp(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	ft_usleep(long int time_in_ms)
+void	ft_usleep(long int ms)
 {
 	long int	start_time;
 
 	start_time = 0;
 	start_time = get_timestamp();
-	while ((get_timestamp() - start_time) < time_in_ms)
+	while ((get_timestamp() - start_time) < ms)
 		usleep(100);
 }
 
