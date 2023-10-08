@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/08 22:29:15 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/08 23:18:39 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	init_philo(t_philo *philo, t_fork **forks, t_params *params, int i)
 		philo->l_fork = &((*forks)[i]);
 	}
 	pthread_mutex_init(&(philo->l_fork->fork_m), NULL);
+	pthread_mutex_init(&(philo->r_fork->fork_m), NULL);
 }
 
 int	create_philos(t_philo **philos, t_fork **forks, t_params *params)
