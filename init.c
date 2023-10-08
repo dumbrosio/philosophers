@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/06 11:46:00 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/08 16:43:11 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,22 @@
 
 void	init_philo(t_philo *philo, t_fork **forks, t_params *params, int i)
 {
+	philo->id = i;
+	philo->last_meal_time = 0;
+	philo->meal_count = 0;
 	philo->params = params;
-	philo->id = i + 1;
-	philo->last_meal = 0;
-	philo->l_fork = &((*forks)[i]);
-	philo->r_fork = &((*forks)[(i + 1) % params->num_philos]);
-	pthread_mutex_init(&(philo->l_fork->is_lock), NULL);
+	if (philo->id % 2 == 0)
+	{
+		philo->r_fork = &((*forks)[i]);
+		philo->l_fork = &((*forks)[(i + 1) % params->num_philos]);
+	}
+	else
+	{
+		philo->r_fork = &((*forks)[(i + 1) % params->num_philos]);
+		philo->l_fork = &((*forks)[i]);
+	}
+	pthread_mutex_init(&(philo->last_meal_m), NULL);
+	pthread_mutex_init(&(philo->l_fork->fork_m), NULL);
 }
 
 int	create_philos(t_philo **philos, t_fork **forks, t_params *params)
@@ -44,23 +54,44 @@ int	create_philos(t_philo **philos, t_fork **forks, t_params *params)
 	return (1);
 }
 
-int	check_params(t_params *params, int argc, char **argv)
+int	check_params(int argc, char **argv)
 {
-	if (argc != 5)
+	if (argc < 5 || argc > 6)
 	{
-		printf("Usage: \
-				%s <philo_num> <time_to_die> <time_to_eat> <time_to_sleep>\n",
-				argv[0]);
+		printf("Usage: %s <num_philos> <time_to_die> ", argv[0]);
+		printf("<time_to_eat> <time_to_sleep> [num_of_meals]\n ");
 		return (0);
 	}
-	params->num_philos = ft_atoi(argv[1]);
-	params->time_to_die = ft_atoi(argv[2]);
-	params->time_to_eat = ft_atoi(argv[3]);
-	params->time_to_sleep = ft_atoi(argv[4]);
-	if (params->num_philos <= 0)
+	if (ft_atoi(argv[1]) <= 0 || ft_atoi(argv[2]) < 0 ||
+		ft_atoi(argv[3]) < 0 || ft_atoi(argv[4]) < 0)
 	{
-		printf("Insert a valid number of philosophers.\n");
+		printf("Invalid value.\n");
 		return (0);
+	}
+	if (argc > 5 && ft_atoi(argv[5]) < 0)
+	{
+		printf("Invalid option.\n");
+		return (0);
+	}
+	return (1);
+}
+
+int	init_params(t_params *params, int argc, char **argv)
+{
+	if (!check_params(argc, argv))
+		return (0);
+	else
+	{
+		params->is_dead = 0;
+		params->num_of_meals = -1;
+		params->num_philos = ft_atoi(argv[1]);
+		params->time_to_die = ft_atoi(argv[2]);
+		params->time_to_eat = ft_atoi(argv[3]);
+		params->time_to_sleep = ft_atoi(argv[4]);
+		if (argc > 5)
+			params->num_of_meals = ft_atoi(argv[5]);
+		pthread_mutex_init(&(params->console_m), NULL);
+		pthread_mutex_init(&(params->is_dead_m), NULL);
 	}
 	return (1);
 }

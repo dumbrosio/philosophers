@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:42:59 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/06 11:49:07 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/08 16:30:15 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,55 +18,58 @@
 
 typedef struct s_params
 {
+	int				is_dead;
+	int				num_of_meals;
 	int				num_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	long			start_time;
 	pthread_mutex_t	console_m;
+	pthread_mutex_t	is_dead_m;
+	pthread_t		death;
 }					t_params;
 
 typedef struct s_fork
 {
-	pthread_mutex_t	is_lock;
+	pthread_mutex_t	fork_m;
 }					t_fork;
 
 typedef struct s_philo
 {
-	pthread_t		life;
-	t_params		*params;
 	int				id;
-	long			last_meal;
+	int				meal_count;
+	long			last_meal_time;
+	pthread_mutex_t	last_meal_m;
+	pthread_t		life;
 	t_fork			*l_fork;
 	t_fork			*r_fork;
+	t_params		*params;
 }					t_philo;
 
 // init
-void				init_philo(t_philo *philo, t_fork **forks, t_params *params,
-						int i);
 int					create_philos(t_philo **philos, t_fork **forks,
 						t_params *params);
-int					check_params(t_params *params, int argc, char **argv);
+int					init_params(t_params *params, int argc, char **argv);
 
 // forks
 void				take_forks(t_philo *philo);
 void				release_forks(t_philo *philo);
 
 // life
-void				eating(t_philo *philo);
-void				thinking(t_philo *philo);
-void				sleeping(t_philo *philo);
 void				*routine(void *arg);
 
 // death
-long				get_meal_interval(t_philo *philo);
-void				die(t_philo *philo);
+void				*check_philos_death(void *arg);
+int					is_dead(t_philo *philo);
 
 // threads.c
 int					create_threads(t_philo **philos, t_params *params);
 int					wait_threads(t_philo **philos, t_params *params);
+int					stop_threads(t_philo *philo);
 
 //utils
 long				get_timestamp(void);
 void				ft_usleep(long int time_in_ms);
 int					ft_atoi(const char *str);
+void				write_state(char *str, t_philo *philo);
