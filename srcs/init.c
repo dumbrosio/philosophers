@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/09 12:19:12 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:58:11 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,8 @@ void	init_philo(t_philo *philo, t_fork **forks, t_params *params, int i)
 	philo->last_meal_time = 0;
 	philo->meal_count = 0;
 	philo->params = params;
-	if (philo->id % 2 == 0)
-	{
-		philo->r_fork = &((*forks)[i]);
-		philo->l_fork = &((*forks)[(i + 1) % params->num_philos]);
-	}
-	else
-	{
-		philo->r_fork = &((*forks)[(i + 1) % params->num_philos]);
-		philo->l_fork = &((*forks)[i]);
-	}
+	philo->l_fork = &((*forks)[i]);
+	philo->r_fork = &((*forks)[(i + 1) % params->num_philos]);
 	pthread_mutex_init(&(philo->l_fork->fork_m), NULL);
 	pthread_mutex_init(&(philo->r_fork->fork_m), NULL);
 }
