@@ -2,7 +2,7 @@ NAME		:=	philo
 
 CC			:=	clang -Wall -Wextra -Werror
 FLAGS		:=	-lpthread
-FLAGS		+=	-g -fsanitize=thread
+#FLAGS		+=	-g -fsanitize=thread
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
