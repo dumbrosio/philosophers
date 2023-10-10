@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 13:41:41 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:22:08 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_philo(t_philo *philo, t_fork **forks, t_params *params, int i)
 {
-	philo->id = i;
+	philo->id = i + 1;
 	philo->last_meal_time = 0;
 	philo->meal_count = 0;
 	philo->params = params;
@@ -60,7 +60,7 @@ int	check_params(int argc, char **argv)
 		printf("Invalid value.\n");
 		return (0);
 	}
-	if (argc > 5 && ft_atoi(argv[5]) < 0)
+	if (argc > 5 && ft_atoi(argv[5]) < 1)
 	{
 		printf("Invalid option.\n");
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:48:04 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 14:20:47 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/10 19:15:24 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_philo_death(t_philo *philo, long timestamp)
 		pthread_mutex_unlock(&(philo->params->is_dead_m));
 		dead = 1;
 		pthread_mutex_lock(&(philo->params->console_m));
-		printf("%03ld %d died\n", timestamp, philo->id + 1);
+		printf("%03ld %d died\n", timestamp, philo->id);
 		pthread_mutex_unlock(&(philo->params->console_m));
 	}
 	return (dead);
