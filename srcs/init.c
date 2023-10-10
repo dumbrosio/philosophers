@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 13:26:49 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:41:41 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,6 @@ int	init_params(t_params *params, int argc, char **argv)
 		params->time_to_sleep = ft_atoi(argv[4]);
 		if (argc > 5)
 			params->num_of_meals = ft_atoi(argv[5]);
-		if (params->num_philos == 1)
-		{
-			printf("000 1 has taken a fork.\n");
-			printf("%d 1 died.\n", params->time_to_die + 1);
-			exit(EXIT_SUCCESS);
-		}
 		pthread_mutex_init(&(params->console_m), NULL);
 		pthread_mutex_init(&(params->is_dead_m), NULL);
 	}

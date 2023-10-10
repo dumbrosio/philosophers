@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:48:04 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 12:41:21 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:20:47 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	*check_philos_death(void *arg)
 
 	philos = (t_philo **)arg;
 	params = philos[0]->params;
+	if (params->num_philos == 1)
+		write_state("has taken a fork", philos[0]);
 	while (1)
 	{
 		i = 0;

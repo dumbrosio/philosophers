@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:46:52 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/08 20:40:47 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:14:27 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ void	*routine(void *arg)
 		if (philo->meal_count >= philo->params->num_of_meals
 			&& philo->params->num_of_meals > 0)
 			break ;
-		take_forks(philo);
-		eating(philo);
-		release_forks(philo);
-		sleeping(philo);
-		thinking(philo);
+		if (philo->params->num_philos > 1)
+		{
+			take_forks(philo);
+			eating(philo);
+			release_forks(philo);
+			sleeping(philo);
+			thinking(philo);
+		}
 	}
 	return (NULL);
 }
