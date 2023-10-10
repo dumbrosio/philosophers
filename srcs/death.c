@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:48:04 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/08 20:44:20 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:18:56 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	check_philo_death(t_philo *philo, long timestamp)
 	last_meal_time = timestamp - philo->last_meal_time;
 	if (last_meal_time > philo->params->time_to_die)
 	{
-		pthread_mutex_lock(&(philo->params->console_m));
 		pthread_mutex_lock(&(philo->params->is_dead_m));
 		philo->params->is_dead = 1;
 		pthread_mutex_unlock(&(philo->params->is_dead_m));
+		pthread_mutex_lock(&(philo->params->console_m));
 		printf("%03ld %d died\n", timestamp, philo->id + 1);
 		pthread_mutex_unlock(&(philo->params->console_m));
 		dead = 1;
