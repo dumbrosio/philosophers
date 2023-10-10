@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 13:21:53 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:26:49 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ int	init_params(t_params *params, int argc, char **argv)
 			params->num_of_meals = ft_atoi(argv[5]);
 		if (params->num_philos == 1)
 		{
-			printf("000 1 is thinking \"Oh no!\".\n");
-			printf("001 1 has taken a fork.\n");
+			printf("000 1 has taken a fork.\n");
 			printf("%d 1 died.\n", params->time_to_die + 1);
 			exit(EXIT_SUCCESS);
 		}
