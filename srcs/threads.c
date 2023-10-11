@@ -6,11 +6,11 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 19:02:02 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 12:23:14 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/11 17:03:35 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../include/philosophers.h"
 
 int	create_threads(t_philo **philos, t_params *params)
 {

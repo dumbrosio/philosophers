@@ -6,11 +6,11 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:48:04 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/11 14:31:38 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/11 17:09:56 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../include/philosophers.h"
 
 int	check_philo_death(t_philo *philo, long timestamp)
 {
