@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:46:52 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 14:14:27 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:34:48 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	eating(t_philo *philo)
 	write_state("is eating", philo);
 	ft_usleep(philo->params->time_to_eat);
 	philo->meal_count++;
+	pthread_mutex_lock(&(philo->last_meal_m));
 	philo->last_meal_time = get_timestamp() - philo->params->start_time;
+	pthread_mutex_unlock(&(philo->last_meal_m));
 }
 
 void	sleeping(t_philo *philo)
