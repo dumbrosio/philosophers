@@ -6,28 +6,23 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/11 17:06:28 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:30:46 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 void	init_philo(t_philo *philo, t_fork **forks, t_params *params, int i)
 {
-	philo->params = params;
 	philo->id = i + 1;
 	philo->last_meal_time = 0;
 	philo->meal_count = 0;
-	philo->r_fork = &((*forks)[i]);
-	philo->r_taken = 0;
-	philo->l_taken = 0;
-	if (i == params->num_philos - 1)
-		philo->l_fork = &((*forks)[0]);
-	else
-		philo->l_fork = &((*forks)[i + 1]);
-	philo->l_fork->used = 0;
-	pthread_mutex_init(&(philo->last_meal_m), NULL);
+	philo->params = params;
+	philo->l_fork = &((*forks)[i]);
+	philo->r_fork = &((*forks)[(i + 1) % params->num_philos]);
 	pthread_mutex_init(&(philo->l_fork->fork_m), NULL);
+	pthread_mutex_init(&(philo->r_fork->fork_m), NULL);
+	pthread_mutex_init(&(philo->last_meal_m), NULL);
 }
 
 int	create_philos(t_philo **philos, t_fork **forks, t_params *params)

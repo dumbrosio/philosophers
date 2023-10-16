@@ -6,11 +6,11 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:44:20 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/11 17:10:38 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:22:32 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 long	get_timestamp(void)
 {

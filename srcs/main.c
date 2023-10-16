@@ -6,11 +6,11 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 18:48:23 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/11 17:04:40 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:21:33 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 int	free_all(t_philo *philos, t_fork *forks, int exit_code)
 {
