@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 19:02:02 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 12:23:14 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/10 19:22:45 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	wait_threads(t_philo **philos, t_params *params)
 			return_code = 0;
 		i++;
 	}
-	if (pthread_detach((*philos)->params->death))
+	if (pthread_join((*philos)->params->death, NULL))
 		return_code = 0;
 	return (return_code);
 }
