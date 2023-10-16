@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:45:41 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 13:25:34 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:25:26 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,7 @@ void	take_forks(t_philo *philo)
 
 void	release_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_unlock(&(philo->l_fork->fork_m));
-		pthread_mutex_unlock(&(philo->r_fork->fork_m));
-	}
-	else
-	{
-		pthread_mutex_unlock(&(philo->r_fork->fork_m));
-		pthread_mutex_unlock(&(philo->l_fork->fork_m));
-	}
+	pthread_mutex_unlock(&(philo->r_fork->fork_m));
+	pthread_mutex_unlock(&(philo->l_fork->fork_m));
+	has_ate(philo);
 }

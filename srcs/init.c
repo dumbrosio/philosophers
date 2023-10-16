@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:47:39 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 13:26:49 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:27:21 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_philo(t_philo *philo, t_fork **forks, t_params *params, int i)
 	philo->r_fork = &((*forks)[(i + 1) % params->num_philos]);
 	pthread_mutex_init(&(philo->l_fork->fork_m), NULL);
 	pthread_mutex_init(&(philo->r_fork->fork_m), NULL);
+	pthread_mutex_init(&(philo->last_meal_time_m), NULL);
 }
 
 int	create_philos(t_philo **philos, t_fork **forks, t_params *params)
@@ -54,8 +55,8 @@ int	check_params(int argc, char **argv)
 		printf("<time_to_eat> <time_to_sleep> [num_of_meals]\n ");
 		return (0);
 	}
-	if (ft_atoi(argv[1]) <= 0 || ft_atoi(argv[2]) < 0 ||
-		ft_atoi(argv[3]) < 0 || ft_atoi(argv[4]) < 0)
+	if (ft_atoi(argv[1]) <= 0 || ft_atoi(argv[2]) < 0 
+		|| ft_atoi(argv[3]) < 0 || ft_atoi(argv[4]) < 0)
 	{
 		printf("Invalid value.\n");
 		return (0);
@@ -74,6 +75,7 @@ int	init_params(t_params *params, int argc, char **argv)
 		return (0);
 	else
 	{
+		params->has_ate = 0;
 		params->is_dead = 0;
 		params->num_of_meals = -1;
 		params->num_philos = ft_atoi(argv[1]);
@@ -82,12 +84,6 @@ int	init_params(t_params *params, int argc, char **argv)
 		params->time_to_sleep = ft_atoi(argv[4]);
 		if (argc > 5)
 			params->num_of_meals = ft_atoi(argv[5]);
-		if (params->num_philos == 1)
-		{
-			printf("000 1 has taken a fork.\n");
-			printf("%d 1 died.\n", params->time_to_die + 1);
-			exit(EXIT_SUCCESS);
-		}
 		pthread_mutex_init(&(params->console_m), NULL);
 		pthread_mutex_init(&(params->is_dead_m), NULL);
 	}

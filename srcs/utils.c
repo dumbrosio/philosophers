@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:44:20 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/08 20:54:41 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:25:00 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	ft_atoi(const char *str)
 	if (*str == '+')
 		str++;
 	else if (*str == '-')
-		(sign = -1), str++;
+	{
+		sign = -1;
+		str++;
+	}
 	while (*str >= '0' && *str <= '9')
 		nbr = nbr * 10 + *str++ - '0';
 	return (nbr * sign);
@@ -50,11 +53,25 @@ int	ft_atoi(const char *str)
 
 void	write_state(char *str, t_philo *philo)
 {
-	long timestamp;
+	long	timestamp;
 
 	timestamp = get_timestamp() - philo->params->start_time;
 	pthread_mutex_lock(&(philo->params->console_m));
 	if (!is_dead(philo))
 		printf("%03ld %d %s\n", timestamp, philo->id + 1, str);
 	pthread_mutex_unlock(&(philo->params->console_m));
+}
+
+void	has_ate(t_philo *philo)
+{
+	if (philo->params->num_of_meals > 0 
+		&& ++philo->meal_count == philo->params->num_of_meals)
+	{
+		if (++philo->params->has_ate == philo->params->num_philos)
+		{
+			pthread_mutex_lock(&(philo->params->is_dead_m));
+			philo->params->is_dead = 1;
+			pthread_mutex_unlock(&(philo->params->is_dead_m));
+		}
+	}
 }
