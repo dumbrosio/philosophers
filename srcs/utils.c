@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:44:20 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/10 15:22:32 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/08 20:54:41 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void	write_state(char *str, t_philo *philo)
 	timestamp = get_timestamp() - philo->params->start_time;
 	pthread_mutex_lock(&(philo->params->console_m));
 	if (!is_dead(philo))
-		printf("%03ld %d %s\n", timestamp, philo->id, str);
+		printf("%03ld %d %s\n", timestamp, philo->id + 1, str);
 	pthread_mutex_unlock(&(philo->params->console_m));
 }
