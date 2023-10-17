@@ -6,7 +6,7 @@
 /*   By: vd-ambro <vd-ambro@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 19:02:02 by vd-ambro          #+#    #+#             */
-/*   Updated: 2023/10/16 17:26:31 by vd-ambro         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:33:47 by vd-ambro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	create_threads(t_philo **philos, t_params *params)
 {
 	int	i;
 
-	params->start_time = get_timestamp();
 	i = 0;
+	params->start_time = get_timestamp();
 	while (i < params->num_philos)
 	{
 		if (pthread_create(&((*philos)[i].life), NULL, routine,
@@ -25,6 +25,7 @@ int	create_threads(t_philo **philos, t_params *params)
 			return (0);
 		i++;
 	}
+	params->start_time = get_timestamp();
 	if (pthread_create(&(params->death), NULL, check_philos_death, philos))
 		return (0);
 	return (1);
